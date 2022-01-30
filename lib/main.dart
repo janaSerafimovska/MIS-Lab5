@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:lab3/login_screen.dart';
+import 'package:lab3/map_screen.dart';
 import 'package:lab3/register_screen.dart';
 import 'package:lab3/slots_view.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -12,6 +13,8 @@ import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/foundation.dart';
 import 'package:timezone/timezone.dart' as timeZone;
+
+import 'home_page.dart';
 
 late User loggedInUser;
 late FirebaseMessaging _firebaseMessaging;
@@ -42,6 +45,7 @@ void main() async {
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true, badge: true, sound: true);
+
   runApp(const MyApp());
 }
 
@@ -55,11 +59,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      initialRoute: '$LoginScreen.id',
+      initialRoute: LoginScreen.id,
       routes: {
         '/': (context) => const MyAppClass(),
-        '$LoginScreen.id': (context) => const LoginScreen(),
-        '$RegistrationScreen.id': (context) => const RegistrationScreen(),
+        LoginScreen.id: (context) => const LoginScreen(),
+        RegistrationScreen.id: (context) => const RegistrationScreen(),
+        HomeScreen.id: (context) => const HomeScreen(),
+        '/map': (context) => const MapScreen(channel: channel),
       },
     );
   }
@@ -82,6 +88,7 @@ class _MyAppState extends State<MyAppClass> {
   List<Map<String, String>> elements = [];
   List<Map<String, String>> _selectedElements = [];
 
+
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
@@ -90,7 +97,6 @@ class _MyAppState extends State<MyAppClass> {
       final user = await _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
-        print("User $user");
         _store
             .collection('Exams')
             .where('UserEmail', isEqualTo: user.email)
@@ -127,7 +133,7 @@ class _MyAppState extends State<MyAppClass> {
     var parser = DateFormat('dd.MM.yyyy hh:mm');
     var terminParsed = parser.parse("${termin}T07:00");
 
-    flutterLocalNotificationsPlugin.zonedSchedule(
+    flutterLocalNotificationsPlugin.schedule(
       1,
       'Slot organizer',
       'You have an exam today. Tap to see your full schedule',
@@ -142,8 +148,6 @@ class _MyAppState extends State<MyAppClass> {
           icon: '@mipmap/ic_launcher',
         ),
       ),
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
       androidAllowWhileIdle: true,
     );
   }

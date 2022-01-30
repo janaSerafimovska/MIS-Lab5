@@ -41,6 +41,13 @@ dependencies:
   firebase_messaging: ^11.2.5
   flutter_local_notifications: ^9.2.0
   timezone: ^0.8.0
+  flutter_google_places: ^0.3.0
+  google_maps_webservice: ^0.0.20-nullsafety.5
+  flutter_background_geolocation: ^4.3.3
+  google_maps_flutter: ^2.1.1
+  geolocator: ^7.0.3
+  geocoding: ^2.0.0
+  flutter_polyline_points: ^1.0.0
 
 dev_dependencies:
   flutter_test:

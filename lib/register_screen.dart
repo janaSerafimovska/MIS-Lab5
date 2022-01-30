@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lab3/home_page.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static String id = '/register';
@@ -135,7 +136,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               setState(() {
                                 isLoading = true;
                               });
-                              Navigator.pushNamed(context, '/');
+                              Navigator.pushNamed(context, HomeScreen.id);
                             }
                           } catch (e) {}
                           setState(() {

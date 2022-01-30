@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lab3/home_page.dart';
 import 'package:lab3/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -135,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 setState(() {
                                   isLoading = false;
                                 });
-                                Navigator.pushNamed(context, '/');
+                                Navigator.pushNamed(context, HomeScreen.id);
                               }
                             } catch (e) {}
                             setState(() {
@@ -164,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: MaterialButton(
                           onPressed: () {
                             Navigator.pushNamed(
-                                context, '$RegistrationScreen.id');
+                                context, RegistrationScreen.id);
                           },
                           minWidth: 200.0,
                           height: 42.0,
